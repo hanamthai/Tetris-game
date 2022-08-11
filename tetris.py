@@ -1,4 +1,4 @@
-from turtle import Screen, speed
+from turtle import Screen, speed, update
 import pygame as pg
 import random as rd
 import time
@@ -9,7 +9,7 @@ width, columns, rows = 400, 15, 30
 distance = width // columns  # size image squares
 height = distance * rows
 grild = [0]*columns*rows
-speed = 500
+speed = 1000
 
 # load image
 picture = []
@@ -71,6 +71,13 @@ while status:
         if event.type == speed_up:
             speed = int(speed * 0.7)
             pg.time.set_timer(tetromino_down, speed)
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_LEFT:
+                character.update(0, -1)
+            if event.key == pg.K_RIGHT:
+                character.update(0, 1)
+            if event.key == pg.K_DOWN:
+                character.update(1, 0)
 
     screen.fill((128, 128, 128))  # background color
     character.show()
