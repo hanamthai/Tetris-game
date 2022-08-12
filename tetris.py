@@ -27,6 +27,7 @@ speed_up = pg.USEREVENT + 2
 # repeatedly create an event on the event queue
 pg.time.set_timer(tetromino_down, speed)
 pg.time.set_timer(speed_up, 30000)
+pg.key.set_repeat(200, 100)   # control how held keys are repeated
 
 # tetromino for letters O,I,J,L,S,Z,T (https://en.wikipedia.org/wiki/Tetromino)
 tetrominos = [[0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # O
@@ -44,7 +45,7 @@ tetrominos = [[0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # O
 class tetromino():
     tetro: list
     row: int = 0    # create coordinates that start to fall
-    column: int = 0
+    column: int = 5
 
     def show(self):
         for n, color in enumerate(self.tetro):
@@ -57,12 +58,17 @@ class tetromino():
         self.row += r
         self.column += c
 
+    def rotate(self):
+        clonetetro = self.tetro.copy()
+        for n, color in enumerate(clonetetro):
+            self.tetro[(2-(n % 4))*4+(n//4)] = color
+
 
 character = tetromino(tetrominos[2])
 
 status = True
 while status:
-    pg.time.delay(500)
+    pg.time.delay(100)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             status = False
@@ -78,6 +84,8 @@ while status:
                 character.update(0, 1)
             if event.key == pg.K_DOWN:
                 character.update(1, 0)
+            if event.key == pg.K_SPACE:
+                character.rotate()
 
     screen.fill((128, 128, 128))  # background color
     character.show()
