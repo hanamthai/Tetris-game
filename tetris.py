@@ -54,14 +54,28 @@ class tetromino():
                 y = (self.row + n//4) * distance
                 screen.blit(picture[color], (x, y))
 
+    def check(self, r, c):
+        for n, color in enumerate(self.tetro):
+            if color > 0:
+                rs = r + n//4
+                cs = c + n % 4
+                if cs < 0 or rs >= rows or cs >= columns or grild[rs * columns + cs] > 0:
+                    return False
+        return True
+
     def update(self, r, c):
-        self.row += r
-        self.column += c
+        if self.check(self.row + r, self.column + c):
+            self.row += r
+            self.column += c
+            return True
+        return False
 
     def rotate(self):
         clonetetro = self.tetro.copy()
         for n, color in enumerate(clonetetro):
             self.tetro[(2-(n % 4))*4+(n//4)] = color
+        if not self.check(self.row, self.column):
+            self.tetro = clonetetro.copy()
 
 
 character = tetromino(tetrominos[2])
