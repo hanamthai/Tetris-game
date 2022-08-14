@@ -8,7 +8,7 @@ pg.init()  # initialize all imported pygame modules
 width, columns, rows = 400, 15, 30
 distance = width // columns  # size image squares
 height = distance * rows
-grild = [0]*columns*rows
+grid = [0]*columns*rows
 speed = 1000
 
 # load image
@@ -54,12 +54,13 @@ class tetromino():
                 y = (self.row + n//4) * distance
                 screen.blit(picture[color], (x, y))
 
+    # create a frame that limits the movement of square.
     def check(self, r, c):
         for n, color in enumerate(self.tetro):
             if color > 0:
-                rs = r + n//4
                 cs = c + n % 4
-                if cs < 0 or rs >= rows or cs >= columns or grild[rs * columns + cs] > 0:
+                rs = r + n//4
+                if cs < 0 or rs >= rows or cs >= columns or grid[rs * columns + cs] > 0:
                     return False
         return True
 
@@ -78,6 +79,13 @@ class tetromino():
             self.tetro = clonetetro.copy()
 
 
+def OjectOnGridLine():
+    for n, color in enumerate(character.tetro):
+        if color > 0:
+            grid[(character.row + n//4)*columns +
+                 (character.column + n % 4)] = color
+
+
 character = tetromino(tetrominos[2])
 
 status = True
@@ -87,7 +95,9 @@ while status:
         if event.type == pg.QUIT:
             status = False
         if event.type == tetromino_down:
-            character.update(1, 0)
+            if not character.update(1, 0):
+                OjectOnGridLine()
+                character = tetromino(tetrominos[2])
         if event.type == speed_up:
             speed = int(speed * 0.7)
             pg.time.set_timer(tetromino_down, speed)
@@ -103,7 +113,7 @@ while status:
 
     screen.fill((128, 128, 128))  # background color
     character.show()
-    for i, color in enumerate(grild):
+    for i, color in enumerate(grid):
         if color > 0:
             x = i % columns * distance  # coordinates of the square
             y = i // columns * distance
