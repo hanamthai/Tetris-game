@@ -86,7 +86,7 @@ def OjectOnGridLine():
                  (character.column + n % 4)] = color
 
 
-character = tetromino(tetrominos[2])
+character = tetromino(rd.choice(tetrominos))
 
 status = True
 while status:
@@ -97,7 +97,7 @@ while status:
         if event.type == tetromino_down:
             if not character.update(1, 0):
                 OjectOnGridLine()
-                character = tetromino(tetrominos[2])
+                character = tetromino(rd.choice(tetrominos))
         if event.type == speed_up:
             speed = int(speed * 0.7)
             pg.time.set_timer(tetromino_down, speed)
