@@ -64,6 +64,7 @@ class tetromino():
                     return False
         return True
 
+    # move the square block to the right, left or down
     def update(self, r, c):
         if self.check(self.row + r, self.column + c):
             self.row += r
@@ -79,11 +80,22 @@ class tetromino():
             self.tetro = clonetetro.copy()
 
 
+# save square block on grid
 def OjectOnGridLine():
     for n, color in enumerate(character.tetro):
         if color > 0:
             grid[(character.row + n//4)*columns +
                  (character.column + n % 4)] = color
+
+
+def DeleteOnRow():
+    for row in range(rows):
+        for column in range(columns):
+            if grid[row * columns + column] == 0:
+                break
+        else:
+            del grid[row * columns: row * columns + column]
+            grid[0:0] = [0]*columns
 
 
 character = tetromino(rd.choice(tetrominos))
@@ -98,6 +110,7 @@ while status:
             if not character.update(1, 0):
                 OjectOnGridLine()
                 character = tetromino(rd.choice(tetrominos))
+                DeleteOnRow()
         if event.type == speed_up:
             speed = int(speed * 0.7)
             pg.time.set_timer(tetromino_down, speed)
