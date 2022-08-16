@@ -9,7 +9,7 @@ width, columns, rows = 400, 15, 30
 distance = width // columns  # size image squares
 height = distance * rows
 grid = [0]*columns*rows
-speed = 1000
+speed, score = 1000, 0
 
 # load image
 picture = []
@@ -89,6 +89,7 @@ def OjectOnGridLine():
 
 
 def DeleteOnRow():
+    scoreX2 = 0
     for row in range(rows):
         for column in range(columns):
             if grid[row * columns + column] == 0:
@@ -96,6 +97,15 @@ def DeleteOnRow():
         else:
             del grid[row * columns: row * columns + column]
             grid[0:0] = [0]*columns
+            scoreX2 += 1
+    # If you delete 2 lines or more, your score will increase to an exponential 2 times.
+    if scoreX2 != 1 and scoreX2 != 0:
+        global score
+        score += scoreX2 ** 2 * 100
+        print(score)
+    else:
+        score += scoreX2 * 100
+        print(score)
 
 
 character = tetromino(rd.choice(tetrominos))
