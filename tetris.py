@@ -27,7 +27,7 @@ speed_up = pg.USEREVENT + 2
 # repeatedly create an event on the event queue
 pg.time.set_timer(tetromino_down, speed)
 pg.time.set_timer(speed_up, 30000)
-pg.key.set_repeat(200, 100)   # control how held keys are repeated
+pg.key.set_repeat(300, 100)   # control how held keys are repeated
 
 # tetromino for letters O,I,J,L,S,Z,T (https://en.wikipedia.org/wiki/Tetromino)
 tetrominos = [[0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # O
@@ -99,20 +99,48 @@ def DeleteOnRow():
             grid[0:0] = [0]*columns
             scoreX2 += 1
     # If you delete 2 lines or more, your score will increase to an exponential 2 times.
-    if scoreX2 != 1 and scoreX2 != 0:
+    if scoreX2 > 1:
         global score
         score += scoreX2 ** 2 * 100
         print(score)
-    else:
+    elif scoreX2 == 1:
         score += scoreX2 * 100
         print(score)
+
+
+# Pause Game
+def pauseGame():
+    pause = True
+    while pause:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_p:
+                    pause = False
+        screen.fill((128, 128, 128))  # background color
+        textsurface = pg.font.SysFont(f'consolas', 40).render(
+            'PAUSE GAME', True, (255, 255, 255))
+        screen.blit(textsurface, (width // 2 -
+                    textsurface.get_width() // 2, 300))
+        textsurface = pg.font.SysFont(f'consolas', 20).render(
+            'press P to play', False, (255, 255, 255))
+        screen.blit(textsurface, (width // 2 -
+                    textsurface.get_width() // 2, 350))
+        pg.display.update()
+
+
+# Game Over
+# def gameOver():
+#     for column in range(len(columns)):
+#         if grid[column:0] != 0:
 
 
 character = tetromino(rd.choice(tetrominos))
 
 status = True
 while status:
-    pg.time.delay(100)
+    # pg.time.delay(100)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             status = False
@@ -133,6 +161,8 @@ while status:
                 character.update(1, 0)
             if event.key == pg.K_SPACE:
                 character.rotate()
+            if event.key == pg.K_p:
+                pauseGame()
 
     screen.fill((128, 128, 128))  # background color
     character.show()
