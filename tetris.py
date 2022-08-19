@@ -9,7 +9,7 @@ width, columns, rows = 400, 15, 30
 distance = width // columns  # size image squares
 height = distance * rows
 grid = [0]*columns*rows
-speed, score = 1000, 0
+speed, score, level = 1000, 0, 0
 
 # load image
 picture = []
@@ -19,14 +19,14 @@ for i in range(8):
 
 screen = pg.display.set_mode([width, height])
 pg.display.set_caption('Tetris Game')
+pygame_icon = pg.image.load('tetris-icon.png')
+pg.display.set_icon(pygame_icon)
 
 # create event
 tetromino_down = pg.USEREVENT + 1
-speed_up = pg.USEREVENT + 2
 
 # repeatedly create an event on the event queue
 pg.time.set_timer(tetromino_down, speed)
-pg.time.set_timer(speed_up, 30000)
 pg.key.set_repeat(300, 100)   # control how held keys are repeated
 
 # tetromino for letters O,I,J,L,S,Z,T (https://en.wikipedia.org/wiki/Tetromino)
@@ -118,7 +118,6 @@ def pauseGame():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_p:
                     pause = False
-        screen.fill((128, 128, 128))  # background color
         textsurface = pg.font.SysFont(f'consolas', 40).render(
             'PAUSE GAME', True, (255, 255, 255))
         screen.blit(textsurface, (width // 2 -
@@ -127,13 +126,32 @@ def pauseGame():
             'press P to play', False, (255, 255, 255))
         screen.blit(textsurface, (width // 2 -
                     textsurface.get_width() // 2, 350))
-        pg.display.update()
+        pg.display.update()  # it allows only a portion of the screen to updated
 
 
 # Game Over
 # def gameOver():
-#     for column in range(len(columns)):
-#         if grid[column:0] != 0:
+#     for column in range(columns):
+#         if grid[column:-1] != 0:
+#             endGame = True
+#             while endGame:
+#                 for event in pg.event.get():
+#                     if event.type == pg.QUIT:
+#                         pg.quit()
+#                     if event.type == pg.KEYDOWN:
+#                         if event.key == pg.K_q:
+#                             endGame = False
+#                             pg.quit()
+#                 screen.fill((128, 128, 128))  # background color
+#                 textsurface = pg.font.SysFont(f'consolas', 40).render(
+#                     'GAME OVER', True, (255, 255, 255))
+#                 screen.blit(textsurface, (width // 2 -
+#                             textsurface.get_width() // 2, 300))
+#                 textsurface = pg.font.SysFont(f'consolas', 20).render(
+#                     'press Q to quit', False, (255, 255, 255))
+#                 screen.blit(textsurface, (width // 2 -
+#                                           textsurface.get_width() // 2, 350))
+#                 pg.display.update()
 
 
 character = tetromino(rd.choice(tetrominos))
@@ -149,9 +167,10 @@ while status:
                 OjectOnGridLine()
                 character = tetromino(rd.choice(tetrominos))
                 DeleteOnRow()
-        if event.type == speed_up:
-            speed = int(speed * 0.7)
-            pg.time.set_timer(tetromino_down, speed)
+                if (score // 500) != level:
+                    speed = int(speed * 0.7)
+                    pg.time.set_timer(tetromino_down, speed)
+                    level += 1
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
                 character.update(0, -1)
@@ -163,9 +182,16 @@ while status:
                 character.rotate()
             if event.key == pg.K_p:
                 pauseGame()
+        # gameOver()
 
     screen.fill((128, 128, 128))  # background color
     character.show()
+    textsurface = pg.font.SysFont(f'consolas', 40).render(
+        f'{score:,}', False, (255, 255, 255))
+    screen.blit(textsurface, (width // 2 - textsurface.get_width() // 2, 5))
+    textsurface = pg.font.SysFont(f'consolas', 20).render(
+        f'Level: {level}', False, (255, 255, 255))
+    screen.blit(textsurface, (width // 2 - textsurface.get_width() // 2, 55))
     for i, color in enumerate(grid):
         if color > 0:
             x = i % columns * distance  # coordinates of the square
