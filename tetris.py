@@ -1,4 +1,3 @@
-from turtle import Screen, speed, update
 import pygame as pg
 import random as rd
 import time
@@ -10,6 +9,14 @@ distance = width // columns  # size image squares
 height = distance * rows
 grid = [0]*columns*rows
 speed, score, level = 1000, 0, 0
+# add background music
+backgroundMusic = pg.mixer.music.load("sound-game/soundtrack.mp3")
+# start music and The -1 value tells Pygame to loop the music file infinitely.
+pg.mixer.music.play(-1)
+# add other musics
+levelUp = pg.mixer.Sound('sound-game/level-up.mp3')
+increaseScore = pg.mixer.Sound('sound-game/increase-score.mp3')
+
 
 # load image
 picture = []
@@ -98,6 +105,7 @@ def DeleteOnRow():
             del grid[row * columns: row * columns + column]
             grid[0:0] = [0]*columns
             scoreX2 += 1
+            pg.mixer.Sound.play(increaseScore)
     # If you delete 2 lines or more, your score will increase to an exponential 2 times.
     if scoreX2 > 1:
         global score
@@ -171,6 +179,8 @@ while status:
                     speed = int(speed * 0.7)
                     pg.time.set_timer(tetromino_down, speed)
                     level += 1
+                    pg.mixer.Sound.play(levelUp)
+            # gameOver()
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
                 character.update(0, -1)
@@ -182,7 +192,6 @@ while status:
                 character.rotate()
             if event.key == pg.K_p:
                 pauseGame()
-        # gameOver()
 
     screen.fill((128, 128, 128))  # background color
     character.show()
