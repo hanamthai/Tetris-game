@@ -16,6 +16,7 @@ pg.mixer.music.play(-1)
 # add other musics
 levelUp = pg.mixer.Sound('sound-game/level-up.mp3')
 increaseScore = pg.mixer.Sound('sound-game/increase-score.mp3')
+game_Over = pg.mixer.Sound('sound-game/game-over.mp3')
 
 
 # load image
@@ -138,28 +139,39 @@ def pauseGame():
 
 
 # Game Over
-# def gameOver():
-#     for column in range(columns):
-#         if grid[column:-1] != 0:
-#             endGame = True
-#             while endGame:
-#                 for event in pg.event.get():
-#                     if event.type == pg.QUIT:
-#                         pg.quit()
-#                     if event.type == pg.KEYDOWN:
-#                         if event.key == pg.K_q:
-#                             endGame = False
-#                             pg.quit()
-#                 screen.fill((128, 128, 128))  # background color
-#                 textsurface = pg.font.SysFont(f'consolas', 40).render(
-#                     'GAME OVER', True, (255, 255, 255))
-#                 screen.blit(textsurface, (width // 2 -
-#                             textsurface.get_width() // 2, 300))
-#                 textsurface = pg.font.SysFont(f'consolas', 20).render(
-#                     'press Q to quit', False, (255, 255, 255))
-#                 screen.blit(textsurface, (width // 2 -
-#                                           textsurface.get_width() // 2, 350))
-#                 pg.display.update()
+def gameOver():
+    for column in range(columns):
+        if grid[column] != 0:
+            endGame = True
+            pg.mixer.music.stop()
+            pg.mixer.Sound.play(game_Over)
+            while endGame:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        pg.quit()
+                    if event.type == pg.KEYDOWN:
+                        if event.key == pg.K_q:
+                            endGame = False
+                            pg.quit()
+                            quit()
+                screen.fill((128, 128, 128))  # background color
+                textsurface = pg.font.SysFont(f'consolas', 50).render(
+                    'GAME OVER', True, (255, 255, 255))
+                screen.blit(textsurface, (width // 2 -
+                            textsurface.get_width() // 2, 250))
+                textsurface = pg.font.SysFont(f'consolas', 30).render(
+                    f'Your score: {score}', False, (255, 255, 255))
+                screen.blit(textsurface, (width // 2 -
+                            textsurface.get_width() // 2, 300))
+                textsurface = pg.font.SysFont(f'consolas', 30).render(
+                    f'Your level: {level}', False, (255, 255, 255))
+                screen.blit(textsurface, (width // 2 -
+                            textsurface.get_width() // 2, 350))
+                textsurface = pg.font.SysFont(f'consolas', 20).render(
+                    'press Q to quit', False, (255, 255, 255))
+                screen.blit(textsurface, (width // 2 -
+                            textsurface.get_width() // 2, 400))
+                pg.display.update()
 
 
 character = tetromino(rd.choice(tetrominos))
@@ -180,7 +192,7 @@ while status:
                     pg.time.set_timer(tetromino_down, speed)
                     level += 1
                     pg.mixer.Sound.play(levelUp)
-            # gameOver()
+                gameOver()
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
                 character.update(0, -1)

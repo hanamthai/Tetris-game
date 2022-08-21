@@ -1,2 +1,1 @@
-
-    # pg.time.delay(200)
+pg.quit()

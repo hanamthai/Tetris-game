@@ -15,3 +15,5 @@
 
 - Sound in game
 - Read and write files to save the highest score.
+- Pause game
+- Game Over
