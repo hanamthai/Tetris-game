@@ -17,3 +17,5 @@
 - Read and write files to save the highest score.
 - Pause game
 - Game Over
+- If you delete more and more rows at once the score will increse higher.
+- If you delete more and more rows at once the speed will increase slower.

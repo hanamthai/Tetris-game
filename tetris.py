@@ -188,6 +188,7 @@ while status:
                 character = tetromino(rd.choice(tetrominos))
                 DeleteOnRow()
                 if (score // 500) != level:
+                    # [This is not a bug, it's a feature :) ]if you delete more and more rows at once the speed will increase slower.
                     speed = int(speed * 0.7)
                     pg.time.set_timer(tetromino_down, speed)
                     level = score // 500
