@@ -190,7 +190,7 @@ while status:
                 if (score // 500) != level:
                     speed = int(speed * 0.7)
                     pg.time.set_timer(tetromino_down, speed)
-                    level += 1
+                    level = score // 500
                     pg.mixer.Sound.play(levelUp)
                 gameOver()
         if event.type == pg.KEYDOWN:
