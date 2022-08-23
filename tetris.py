@@ -1,3 +1,4 @@
+from distutils.ccompiler import show_compilers
 import pygame as pg
 import random as rd
 import time
@@ -9,6 +10,17 @@ distance = width // columns  # size image squares
 height = distance * rows
 grid = [0]*columns*rows
 speed, score, level = 1000, 0, 0
+
+# read file highest-score
+try:
+    file1 = open("highest-score.txt", "r")
+except:
+    print("File don't exist!!")
+    pg.quit()
+    quit()
+highestScore = int(file1.read())
+file1.close()
+
 # add background music
 backgroundMusic = pg.mixer.music.load("sound-game/soundtrack.mp3")
 # start music and The -1 value tells Pygame to loop the music file infinitely.
@@ -23,11 +35,11 @@ game_Over = pg.mixer.Sound('sound-game/game-over.mp3')
 picture = []
 for i in range(8):
     picture.append(pg.transform.scale(
-        pg.image.load(f'T{i}.jpg'), (distance, distance)))
+        pg.image.load(f'image/T{i}.jpg'), (distance, distance)))
 
 screen = pg.display.set_mode([width, height])
 pg.display.set_caption('Tetris Game')
-pygame_icon = pg.image.load('tetris-icon.png')
+pygame_icon = pg.image.load('image/tetris-icon.png')
 pg.display.set_icon(pygame_icon)
 
 # create event
@@ -154,6 +166,18 @@ def gameOver():
                             endGame = False
                             pg.quit()
                             quit()
+                global score
+                global highestScore
+                if score > highestScore:
+                    try:
+                        file1 = open("highest-score.txt", "w")
+                    except:
+                        print("File don't exist!!")
+                        pg.quit()
+                        quit()
+                    highestScore = score
+                    file1.write(str(highestScore))
+                    file1.close()
                 screen.fill((128, 128, 128))  # background color
                 textsurface = pg.font.SysFont(f'consolas', 50).render(
                     'GAME OVER', True, (255, 255, 255))
@@ -171,6 +195,10 @@ def gameOver():
                     'press Q to quit', False, (255, 255, 255))
                 screen.blit(textsurface, (width // 2 -
                             textsurface.get_width() // 2, 400))
+                textsurface = pg.font.SysFont(f'consolas', 40).render(
+                    f'Highest score: {highestScore}', False, (255, 255, 255))
+                screen.blit(textsurface, (width // 2 -
+                            textsurface.get_width() // 2, 500))
                 pg.display.update()
 
 
