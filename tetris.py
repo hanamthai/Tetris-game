@@ -5,11 +5,11 @@ import time
 from dataclasses import dataclass
 
 pg.init()  # initialize all imported pygame modules
-width, columns, rows = 400, 15, 30
-distance = width // columns  # size image squares
-height = distance * rows
+width, columns, rows = 390, 15, 30
+distance = width // columns  # size image squares = 26
+height = distance * rows  # 780
 grid = [0]*columns*rows
-speed, score, level = 1000, 0, 0
+speed, score, level = 800, 0, 0
 
 # read file highest-score
 try:
@@ -166,6 +166,7 @@ def gameOver():
                             endGame = False
                             pg.quit()
                             quit()
+
                 global score
                 global highestScore
                 if score > highestScore:
@@ -178,6 +179,7 @@ def gameOver():
                     highestScore = score
                     file1.write(str(highestScore))
                     file1.close()
+
                 screen.fill((128, 128, 128))  # background color
                 textsurface = pg.font.SysFont(f'consolas', 50).render(
                     'GAME OVER', True, (255, 255, 255))
@@ -195,10 +197,10 @@ def gameOver():
                     'press Q to quit', False, (255, 255, 255))
                 screen.blit(textsurface, (width // 2 -
                             textsurface.get_width() // 2, 400))
-                textsurface = pg.font.SysFont(f'consolas', 40).render(
+                textsurface = pg.font.SysFont(f'consolas', 30).render(
                     f'Highest score: {highestScore}', False, (255, 255, 255))
                 screen.blit(textsurface, (width // 2 -
-                            textsurface.get_width() // 2, 500))
+                            textsurface.get_width() // 2, 450))
                 pg.display.update()
 
 
