@@ -139,12 +139,27 @@ def pauseGame():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_p:
                     pause = False
+                if event.key == pg.K_q:  # if you exit the game when you pause the game, the system will automatically check the score with the highest score to save in the file highest-score.txt
+                    global score
+                    global highestScore
+                    if score > highestScore:
+                        try:
+                            file1 = open("highest-score.txt", "w")
+                        except:
+                            print("File don't exist!!")
+                            pg.quit()
+                            quit()
+                        highestScore = score
+                    file1.write(str(highestScore))
+                    file1.close()
+                    pg.quit()
+                    quit()
         textsurface = pg.font.SysFont(f'consolas', 40).render(
             'PAUSE GAME', True, (255, 255, 255))
         screen.blit(textsurface, (width // 2 -
                     textsurface.get_width() // 2, 300))
         textsurface = pg.font.SysFont(f'consolas', 20).render(
-            'press P to play', False, (255, 255, 255))
+            'press P to play or press Q to quit', False, (255, 255, 255))
         screen.blit(textsurface, (width // 2 -
                     textsurface.get_width() // 2, 350))
         pg.display.update()  # it allows only a portion of the screen to updated
