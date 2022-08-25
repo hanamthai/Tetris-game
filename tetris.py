@@ -115,7 +115,7 @@ def DeleteOnRow():
             if grid[row * columns + column] == 0:
                 break
         else:
-            del grid[row * columns: row * columns + column]
+            del grid[row * columns: row * columns + column+1]
             grid[0:0] = [0]*columns
             scoreX2 += 1
             pg.mixer.Sound.play(increaseScore)
