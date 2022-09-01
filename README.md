@@ -11,6 +11,14 @@
 - Step 1: Check if python, pip and pygame are installed. [Click here](https://www.geeksforgeeks.org/how-to-install-pygame-in-windows/)
 - Step 2: Clone the project to the local computer.
 
+## Game guide:
+
+- '>' :move the square block to the right
+- '<' :move the square block to the left
+- 'v' :move the square block to down faster
+- 'P' :pause game
+- 'SPACE' :rotate the square block
+
 ## Features to add:
 
 - Sound in game
