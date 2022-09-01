@@ -100,7 +100,7 @@ class tetromino():
             self.tetro = clonetetro.copy()
 
 
-# save square block on grid
+# Save square block on grid
 def OjectOnGridLine():
     for n, color in enumerate(character.tetro):
         if color > 0:
@@ -108,6 +108,7 @@ def OjectOnGridLine():
                  (character.column + n % 4)] = color
 
 
+# Delete all filled rows
 def DeleteOnRow():
     scoreX2 = 0
     for row in range(rows):
@@ -115,7 +116,7 @@ def DeleteOnRow():
             if grid[row * columns + column] == 0:
                 break
         else:
-            del grid[row * columns: row * columns + column+1]
+            del grid[row * columns: row * columns + column + 1]
             grid[0:0] = [0]*columns
             scoreX2 += 1
             pg.mixer.Sound.play(increaseScore)
@@ -129,6 +130,22 @@ def DeleteOnRow():
         print(score)
 
 
+# Write to file txt
+def writeFile():
+    global score
+    global highestScore
+    if score > highestScore:
+        try:
+            file1 = open("highest-score.txt", "w")
+        except:
+            print("File don't exist!!")
+            pg.quit()
+            quit()
+        highestScore = score
+        file1.write(str(highestScore))
+        file1.close()
+
+
 # Pause Game
 def pauseGame():
     pause = True
@@ -140,18 +157,7 @@ def pauseGame():
                 if event.key == pg.K_p:
                     pause = False
                 if event.key == pg.K_q:  # if you exit the game when you pause the game, the system will automatically check the score with the highest score to save in the file highest-score.txt
-                    global score
-                    global highestScore
-                    if score > highestScore:
-                        try:
-                            file1 = open("highest-score.txt", "w")
-                        except:
-                            print("File don't exist!!")
-                            pg.quit()
-                            quit()
-                        highestScore = score
-                    file1.write(str(highestScore))
-                    file1.close()
+                    writeFile()
                     pg.quit()
                     quit()
         textsurface = pg.font.SysFont(f'consolas', 40).render(
@@ -181,19 +187,7 @@ def gameOver():
                             endGame = False
                             pg.quit()
                             quit()
-
-                global score
-                global highestScore
-                if score > highestScore:
-                    try:
-                        file1 = open("highest-score.txt", "w")
-                    except:
-                        print("File don't exist!!")
-                        pg.quit()
-                        quit()
-                    highestScore = score
-                    file1.write(str(highestScore))
-                    file1.close()
+                writeFile()
 
                 screen.fill((128, 128, 128))  # background color
                 textsurface = pg.font.SysFont(f'consolas', 50).render(
