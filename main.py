@@ -1,4 +1,3 @@
-from distutils.ccompiler import show_compilers
 import pygame as pg
 import random as rd
 import time
@@ -26,16 +25,19 @@ backgroundMusic = pg.mixer.music.load("sound-game/soundtrack.mp3")
 # start music and The -1 value tells Pygame to loop the music file infinitely.
 pg.mixer.music.play(-1)
 # add other musics
-levelUp = pg.mixer.Sound('sound-game/level-up.mp3')
+level_up = pg.mixer.Sound('sound-game/level-up.mp3')
 increaseScore = pg.mixer.Sound('sound-game/increase-score.mp3')
 game_Over = pg.mixer.Sound('sound-game/game-over.mp3')
 
 
 # load image
 picture = []
-for i in range(8):
-    picture.append(pg.transform.scale(
-        pg.image.load(f'image/T{i}.jpg'), (distance, distance)))
+# for i in range(8):
+#     picture.append(pg.transform.scale(
+#         pg.image.load(f'image/T{i}.jpg'), (distance, distance)))
+
+picture = [(pg.transform.scale(pg.image.load(
+    f'image/T{i}.jpg'), (distance, distance))) for i in range(8)]   # use list comprehension
 
 screen = pg.display.set_mode([width, height])
 pg.display.set_caption('Tetris Game')
@@ -108,6 +110,31 @@ def OjectOnGridLine():
                  (character.column + n % 4)] = color
 
 
+# Calculate the score received
+def scoreCalculate(scoreX2):
+    # If you delete 2 lines or more, your score will increase to an exponential 2 times.
+    if scoreX2 > 1:
+        global score
+        score += scoreX2 ** 2 * 100
+        print(score)
+    elif scoreX2 == 1:
+        score += scoreX2 * 100
+        print(score)
+
+
+# Check if there are enough score to level up
+def levelUp():
+    global score
+    global level
+    global speed
+    if (score // 500) != level:
+        # [This is not a bug, it's a feature :) ]if you delete more and more rows at once the speed will increase slower.
+        speed = int(speed * 0.7)
+        pg.time.set_timer(tetromino_down, speed)
+        level = score // 500
+        pg.mixer.Sound.play(level_up)
+
+
 # Delete all filled rows
 def DeleteOnRow():
     scoreX2 = 0
@@ -120,14 +147,8 @@ def DeleteOnRow():
             grid[0:0] = [0]*columns
             scoreX2 += 1
             pg.mixer.Sound.play(increaseScore)
-    # If you delete 2 lines or more, your score will increase to an exponential 2 times.
-    if scoreX2 > 1:
-        global score
-        score += scoreX2 ** 2 * 100
-        print(score)
-    elif scoreX2 == 1:
-        score += scoreX2 * 100
-        print(score)
+
+    scoreCalculate(scoreX2)
 
 
 # Write to file txt
@@ -226,12 +247,7 @@ while status:
                 OjectOnGridLine()
                 character = tetromino(rd.choice(tetrominos))
                 DeleteOnRow()
-                if (score // 500) != level:
-                    # [This is not a bug, it's a feature :) ]if you delete more and more rows at once the speed will increase slower.
-                    speed = int(speed * 0.7)
-                    pg.time.set_timer(tetromino_down, speed)
-                    level = score // 500
-                    pg.mixer.Sound.play(levelUp)
+                levelUp()
                 gameOver()
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
