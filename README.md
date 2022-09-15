@@ -16,6 +16,7 @@
 - '>' :move the square block to the right
 - '<' :move the square block to the left
 - 'v' :move the square block to down faster
+- '^' :move the square block to down immediately
 - 'P' :pause game
 - 'SPACE' :rotate the square block
 

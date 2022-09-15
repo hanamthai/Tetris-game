@@ -1,3 +1,4 @@
+from turtle import update
 import pygame as pg
 import random as rd
 import time
@@ -254,6 +255,10 @@ while status:
                 character.update(0, -1)
             if event.key == pg.K_RIGHT:
                 character.update(0, 1)
+            if event.key == pg.K_UP:
+                while(1):
+                    if not character.update(1, 0):
+                        break
             if event.key == pg.K_DOWN:
                 character.update(1, 0)
             if event.key == pg.K_SPACE:
