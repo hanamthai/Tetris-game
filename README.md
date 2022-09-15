@@ -34,6 +34,16 @@
 - Random items. (not done yet!)
 - Multiplayer mode. (not done yet!)
 
+## Demo:
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Game Screen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Score and Level &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pause Game &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Game Over
+<p float="left">
+  <img src="/readme-image/demo1.png" height="500" />
+  <img src="/readme-image/demo2.png" height="500" /> 
+  <img src="/readme-image/demo3.png" height="500" />
+  <img src="/readme-image/demo4.png" height="500" />
+</p>
+
+
 ## Presentation file:
 
 ```bash
