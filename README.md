@@ -35,11 +35,14 @@
 - Multiplayer mode. (not done yet!)
 
 ## Demo:
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Game Screen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Score and Level &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pause Game &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Game Over
 <p float="left">
+  <h3>Game Screen<h3/>
   <img src="/readme-image/demo1.png" height="500" />
-  <img src="/readme-image/demo2.png" height="500" /> 
+  <h3>Score and Level<h3/>
+  <img src="/readme-image/demo2.png" height="500" />
+  <h3>Pause Game<h3/>
   <img src="/readme-image/demo3.png" height="500" />
+  <h3>Game Over<h3/>
   <img src="/readme-image/demo4.png" height="500" />
 </p>
 
