@@ -22,9 +22,24 @@
 
 ## Features to add:
 
-- Sound in game
-- Read and write files to save the highest score.
-- Pause game
-- Game Over
-- If you delete more and more rows at once the score will increse higher.
-- If you delete more and more rows at once the speed will increase slower.
+- Sound in game. (done!)
+- Read and write files to save the highest score. (done!)
+- Pause game. (done!)
+- Game Over. (done!)
+- If you delete more and more rows at once the score will increse higher. (done!)
+- If you delete more and more rows at once the speed will increase slower. (done!)
+- Move the square block to down immediately. (done!)
+- Route prediction. (not done yet!)
+- Predict block tetromino. (not done yet!)
+- Random items. (not done yet!)
+- Multiplayer mode. (not done yet!)
+
+## Presentation file:
+
+```bash
+    https://www.canva.com/design/DAFKCMXGbaY/N0pHmTBiQuiNzEB7IdBQEw/view?utm_content=DAFKCMXGbaY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+```
+
+## Reference source:
+
+- Code is referenced from lecturer [Pham Van Tu](https://www.youtube.com/watch?v=FZBoy1y9nP0).
