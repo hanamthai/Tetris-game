@@ -33,8 +33,10 @@
 - Predict block tetromino. (not done yet!)
 - Random items. (not done yet!)
 - Multiplayer mode. (not done yet!)
+- Customizable hotkey. (not done yet!)
 
 ## Demo:
+
 <p float="left">
   <h3>Game Screen<h3/>
   <img src="/readme-image/demo1.png" height="500" />
@@ -45,7 +47,6 @@
   <h3>Game Over<h3/>
   <img src="/readme-image/demo4.png" height="500" />
 </p>
-
 
 ## Presentation file:
 

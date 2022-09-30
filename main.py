@@ -5,7 +5,7 @@ import time
 from dataclasses import dataclass
 
 pg.init()  # initialize all imported pygame modules
-width, columns, rows = 390, 15, 30
+width, columns, rows, add = 390, 15, 30, 6
 distance = width // columns  # size image squares = 26
 height = distance * rows  # 780
 grid = [0]*columns*rows
@@ -40,7 +40,7 @@ picture = []
 picture = [(pg.transform.scale(pg.image.load(
     f'image/T{i}.jpg'), (distance, distance))) for i in range(8)]   # use list comprehension
 
-screen = pg.display.set_mode([width, height])
+screen = pg.display.set_mode([width+(add*26), height])
 pg.display.set_caption('Tetris Game')
 pygame_icon = pg.image.load('image/tetris-icon.png')
 pg.display.set_icon(pygame_icon)
@@ -95,12 +95,28 @@ class tetromino():
             return True
         return False
 
+    # rotate the tetrominos blocks.
     def rotate(self):
         clonetetro = self.tetro.copy()
         for n, color in enumerate(clonetetro):
             self.tetro[(2-(n % 4))*4+(n//4)] = color
         if not self.check(self.row, self.column):
             self.tetro = clonetetro.copy()
+
+
+# draw the frame
+def drawFrame():
+    for i in range(rows):
+        screen.blit(picture[0], (columns*distance, i*distance))
+
+
+# draw the next tetromino
+def drawNextTetromino(next_tetromino):
+    for n, color in enumerate(next_tetromino):
+        if color > 0:
+            x = ((columns + 1) + n % 4) * distance  # column = 31
+            y = (1 + n//4) * distance   # row = 0
+            screen.blit(picture[color], (x, y))
 
 
 # Save square block on grid
@@ -236,6 +252,8 @@ def gameOver():
 
 
 character = tetromino(rd.choice(tetrominos))
+next_tetromino = (rd.choice(tetrominos)).copy()
+print(type(next_tetromino))
 
 status = True
 while status:
@@ -246,7 +264,8 @@ while status:
         if event.type == tetromino_down:
             if not character.update(1, 0):
                 OjectOnGridLine()
-                character = tetromino(rd.choice(tetrominos))
+                character = tetromino(next_tetromino)
+                next_tetromino = rd.choice(tetrominos)
                 DeleteOnRow()
                 levelUp()
                 gameOver()
@@ -267,6 +286,8 @@ while status:
                 pauseGame()
 
     screen.fill((128, 128, 128))  # background color
+    drawFrame()
+    drawNextTetromino(next_tetromino)
     character.show()
     textsurface = pg.font.SysFont(f'consolas', 40).render(
         f'{score:,}', False, (255, 255, 255))
