@@ -30,8 +30,8 @@
 - If you delete more and more rows at once the speed will increase slower. (done!)
 - Move the square block to down immediately. (done!)
 - Route prediction. (not done yet!)
-- Predict block tetromino. (not done yet!)
-- Random items. (not done yet!)
+- Predict block tetromino. (done!)
+- Random gift. (not done yet!)
 - Multiplayer mode. (not done yet!)
 - Customizable hotkey. (not done yet!)
 
